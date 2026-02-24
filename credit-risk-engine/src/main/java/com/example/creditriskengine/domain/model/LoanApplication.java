@@ -19,7 +19,7 @@ public class LoanApplication {
                            int existingLoansCount,
                            int latePaymentsLastYear,
                            BigDecimal requestedAmount) {
-        if (age < 18) {
+        if (!this.isAdult()) {
             throw new IllegalArgumentException("Age must be at least 18");
         }
         this.age = age;
@@ -51,11 +51,47 @@ public class LoanApplication {
             throw new IllegalArgumentException("RequestedAmount must not be null");
         } else if (requestedAmount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("RequestedAmount must be greater than zero");
-        } else if (monthlyIncome.intValueExact()*12 > requestedAmount.intValueExact()) {
-            throw new IllegalArgumentException("RequestedAmount must not be higher than annual income");
         }
         this.requestedAmount = requestedAmount;
     }
 
+    public boolean isAdult() {
+        return age > 18;
+    }
 
+    public boolean hasCreditHistory() {
+        return creditHistoryYears > 0;
+    }
+
+    public boolean hasLatePaymentsLastYear() {
+        return latePaymentsLastYear > 0;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public BigDecimal getMonthlyIncome() {
+        return monthlyIncome;
+    }
+
+    public EmploymentType getEmploymentType() {
+        return employmentType;
+    }
+
+    public BigDecimal getRequestedAmount() {
+        return requestedAmount;
+    }
+
+    public int getLatePaymentsLastYear() {
+        return latePaymentsLastYear;
+    }
+
+    public int getExistingLoansCount() {
+        return existingLoansCount;
+    }
+
+    public int getCreditHistoryYears() {
+        return creditHistoryYears;
+    }
 }
