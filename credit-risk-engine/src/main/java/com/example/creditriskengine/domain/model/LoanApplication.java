@@ -6,17 +6,21 @@ public class LoanApplication {
 
     private final int age;
     private final BigDecimal monthlyIncome;
+    private final BigDecimal monthlyObligations;
     private final EmploymentType employmentType;
     private final int creditHistoryYears;
     private final int existingLoansCount;
+    private final int monthsToPay;
     private final int latePaymentsLastYear;
     private final BigDecimal requestedAmount;
 
     public LoanApplication(int age,
                            BigDecimal monthlyIncome,
+                           BigDecimal monthlyObligations,
                            EmploymentType employmentType,
                            int creditHistoryYears,
                            int existingLoansCount,
+                           int monthsToPay,
                            int latePaymentsLastYear,
                            BigDecimal requestedAmount) {
         if (!this.isAdult()) {
@@ -29,6 +33,12 @@ public class LoanApplication {
             throw new IllegalArgumentException("MonthlyIncome must be greater than zero");
         }
         this.monthlyIncome = monthlyIncome;
+        if (monthlyObligations == null) {
+            throw new IllegalArgumentException("MonthlyObligations must not be null");
+        } else if (monthlyObligations.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("MonthlyObligations must be greater than zero");
+        }
+        this.monthlyObligations = monthlyObligations;
         if (employmentType == null) {
             throw new IllegalArgumentException("EmploymentType must not be null");
         }
@@ -46,6 +56,10 @@ public class LoanApplication {
         if (latePaymentsLastYear < 0) {
             throw new IllegalArgumentException("LatePaymentsLastYear must not be negative");
         }
+        if (monthsToPay < 0) {
+            throw new IllegalArgumentException("MonthsToPay must be greater than zero");
+        }
+        this.monthsToPay = monthsToPay;
         this.latePaymentsLastYear = latePaymentsLastYear;
         if (requestedAmount == null) {
             throw new IllegalArgumentException("RequestedAmount must not be null");
@@ -93,5 +107,13 @@ public class LoanApplication {
 
     public int getCreditHistoryYears() {
         return creditHistoryYears;
+    }
+
+    public BigDecimal getMonthlyObligations() {
+        return monthlyObligations;
+    }
+
+    public int getMonthsToPay() {
+        return monthsToPay;
     }
 }
